@@ -1,6 +1,6 @@
 from contextlib import contextmanager
 
-from tveebot_tracker.episodes import TVShow, Quality, Episode
+from tveebot_tracker.episode import TVShow, Quality, Episode
 
 
 class Connection:

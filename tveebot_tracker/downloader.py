@@ -1,7 +1,7 @@
 import asyncio
 from abc import ABC, abstractmethod
 
-from tveebot_tracker.episodes import EpisodeFile
+from tveebot_tracker.episode import Episode
 
 
 class Downloader(ABC):
