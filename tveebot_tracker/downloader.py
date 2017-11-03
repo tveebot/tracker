@@ -29,9 +29,9 @@ class Downloader(ABC):
         self._loop.close()
 
     # Called by the tracker when it wants to download a new episode
-    def download(self, file: EpisodeFile):
-        self._loop.create_task(self._download(file))
+    def download(self, link: str, episode: Episode):
+        self._loop.create_task(self._download(link, episode))
 
     @abstractmethod
-    async def _download(self, file: EpisodeFile):
+    async def _download(self, link: str, episode: Episode):
         pass
