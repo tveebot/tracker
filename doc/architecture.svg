@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="33cm" height="12cm" viewBox="111 140 644 230" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g id="Background">
+    <g>
+      <rect style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="238.136" y="153.75" width="68.2" height="54" rx="0" ry="0"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="272.236" y="184.65">
+        <tspan x="272.236" y="184.65">Tracker</tspan>
+      </text>
+    </g>
+    <g>
+      <rect style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="654.854" y="153.75" width="98.85" height="54" rx="0" ry="0"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="704.279" y="184.65">
+        <tspan x="704.279" y="184.65">Downloader</tspan>
+      </text>
+    </g>
+    <g>
+      <rect style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="112.6" y="304.396" width="68.2" height="54" rx="0" ry="0"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="146.7" y="335.296">
+        <tspan x="146.7" y="335.296">Source</tspan>
+      </text>
+    </g>
+    <g>
+      <rect style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="423.354" y="160.75" width="128.125" height="40" rx="0" ry="0"/>
+      <line style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x1="436.166" y1="160.75" x2="436.166" y2="200.75"/>
+      <line style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x1="538.667" y1="160.75" x2="538.667" y2="200.75"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="487.416" y="184.75">
+        <tspan x="487.416" y="184.75">Episode Queue</tspan>
+      </text>
+    </g>
+    <g>
+      <polyline style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" points="146.7,304.396 146.7,180.75 228.4,180.75 "/>
+      <polygon style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" points="235.9,180.75 225.9,185.75 228.4,180.75 225.9,175.75 "/>
+    </g>
+    <g>
+      <line style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x1="307.342" y1="180.75" x2="412.63" y2="180.75"/>
+      <polygon style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" points="420.13,180.75 410.13,185.75 412.63,180.75 410.13,175.75 "/>
+    </g>
+    <g>
+      <line style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x1="552.459" y1="180.75" x2="644.126" y2="180.75"/>
+      <polygon style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" points="651.626,180.75 641.626,185.75 644.126,180.75 641.626,175.75 "/>
+    </g>
+    <g>
+      <path style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" d="M 346.03 304.521 C 360.928,295.021 368.377,291.854 383.275,291.854 C 398.173,291.854 405.622,295.021 420.52,304.521 L 420.52,355.187 C 405.622,364.687 398.173,367.854 383.275,367.854 C 368.377,367.854 360.928,364.687 346.03,355.187 L 346.03,304.521z"/>
+      <path style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" d="M 346.03 304.521 C 360.928,314.021 368.377,317.187 383.275,317.187 C 398.173,317.187 405.622,314.021 420.52,304.521"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="383.275" y="332.187">
+        <tspan x="383.275" y="332.187">Episode</tspan>
+        <tspan x="383.275" y="348.187">DB</tspan>
+      </text>
+    </g>
+    <g>
+      <polyline style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" points="704.279,208.753 704.279,263.596 401.898,263.596 401.898,284.888 "/>
+      <polygon style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" points="401.898,292.388 396.898,282.388 401.898,284.888 406.898,282.388 "/>
+    </g>
+    <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="146.006" y="152.558">
+      <tspan x="146.006" y="152.558">Retrieve </tspan>
+      <tspan x="146.006" y="168.558">episodes</tspan>
+    </text>
+    <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="284.806" y="235.066">
+      <tspan x="284.806" y="235.066">Keep track of </tspan>
+      <tspan x="284.806" y="251.066">new episodes</tspan>
+    </text>
+    <g>
+      <polyline style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" points="272.236,207.75 272.236,263.596 364.652,263.596 364.652,284.888 "/>
+      <polygon style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" points="364.652,292.388 359.652,282.388 364.652,284.888 369.652,282.388 "/>
+    </g>
+    <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="322.59" y="168.751">
+      <tspan x="322.59" y="168.751">New Episode</tspan>
+    </text>
+    <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="574.74" y="168.751">
+      <tspan x="574.74" y="168.751">Episode</tspan>
+    </text>
+    <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="588.62" y="235.066">
+      <tspan x="588.62" y="235.066">Label episode </tspan>
+      <tspan x="588.62" y="251.066">as downloaded</tspan>
+    </text>
+  </g>
+</svg>
