@@ -1,5 +1,6 @@
 from queue import Queue
 
+from tveebot_tracker.episode import TVShow
 from tveebot_tracker.episode_db import EpisodeDB
 from tveebot_tracker.source import EpisodeSource
 from tveebot_tracker.stoppable_thread import StoppableThread
@@ -35,3 +36,18 @@ class Tracker(StoppableThread):
 
     def run(self):
         pass
+
+    def add_tvshow(self, tvshow: TVShow):
+        """
+        Adds a new TV Show to be tracked.
+
+        :param tvshow: TV show to be tracked
+        """
+
+    def remove_tvshow(self, tvshow_id: str):
+        """
+        Signals the tracker to stop tracking the TV Show with the specified ID.
+
+        :param tvshow_id: ID corresponding to TV Show to stop tracking
+        """
+

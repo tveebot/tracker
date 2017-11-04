@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
-from queue import Queue, Empty
+from queue import Queue
 
-from tveebot_tracker.episode import Episode, EpisodeFile, State
+from tveebot_tracker.episode import Episode, EpisodeFile
 from tveebot_tracker.episode_db import EpisodeDB
 from tveebot_tracker.stoppable_thread import StoppableThread
 
