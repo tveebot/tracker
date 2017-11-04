@@ -22,9 +22,9 @@ class EpisodeSource(ABC):
     # Called by the tracker when it wants to get the episodes available for
     # a specific TVShow
     @abstractmethod
-    def get_episodes_for(self, tvshow_reference: str) -> list:
+    def fetch(self, tvshow_reference: str) -> list:
         """
-        Retrieve all available episode files corresponding to the specified
+        Fetches all available episode files, corresponding to the specified
         TV show. Multiple files for the same episode may be retrieved.
 
         The TV show to obtain the episodes from is identified by some reference
