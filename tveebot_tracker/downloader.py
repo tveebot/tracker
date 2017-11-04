@@ -1,10 +1,12 @@
-import asyncio
 from abc import ABC, abstractmethod
+from queue import Queue, Empty
 
-from tveebot_tracker.episode import Episode
+from tveebot_tracker.episode import Episode, EpisodeFile, State
+from tveebot_tracker.episode_db import EpisodeDB
+from tveebot_tracker.stoppable_thread import StoppableThread
 
 
-class Downloader(ABC):
+class Downloader(ABC, StoppableThread):
     """
     The downloader is the component responsible for actually downloading
     the episode files.
@@ -15,23 +17,49 @@ class Downloader(ABC):
     implemented by the subclasses.
     """
 
-    def __init__(self):
-        self._queue = asyncio.Queue()
-        self._loop = asyncio.get_event_loop()
+    def __init__(self, database: EpisodeDB, queue: Queue=Queue()):
+        super().__init__()
+        self._database = database
 
-    def run_forever(self):
-        self._loop.run_forever()
+        # This queue is shared with the tracker. The tracker 'produces'
+        # episodes to download. The Downloader consumes those episodes and
+        # downloads them.
+        self._queue = queue
 
-    def stop(self):
-        self._loop.stop()
+    @property
+    def queue(self):
+        """ Download queue, including the episodes to be downloaded """
+        return self._queue
 
-    def close(self):
-        self._loop.close()
-
-    # Called by the tracker when it wants to download a new episode
-    def download(self, link: str, episode: Episode):
-        self._loop.create_task(self._download(link, episode))
+    def run(self):
+        pass
 
     @abstractmethod
-    async def _download(self, link: str, episode: Episode):
-        pass
+    def download(self, episode: Episode, file: EpisodeFile):
+        """
+        Subclasses should use this method as the entry point to start
+        downloading an episode file.
+
+        !! When this method returns, it does not mean, necessarily, that the
+        episode has finished downloading !!
+
+        Subclasses should always call _download_finished() method when a
+        download has finished.
+
+        :param episode: episode to download
+        :param file:    actual file to be downloaded
+        """
+
+    def _download_finished(self, episode: Episode, file: EpisodeFile):
+        """
+        Changes the *episode*'s state to 'downloaded' and updates its
+        download information, such as, the episode quality and the time at
+        which the episode was downloaded.
+
+        Must be called by subclasses after they determine that an episode
+        file has finished downloading.
+
+        :param episode: episode that finished downloading
+        :param file:    actual file that has been downloaded
+        """
+
