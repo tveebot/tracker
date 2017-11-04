@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
-<svg width="34cm" height="9cm" viewBox="47 55 662 176" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="37cm" height="12cm" viewBox="47 55 740 221" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <g id="Background">
     <g>
       <rect style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="127" y="123.5" width="81.95" height="36"/>
@@ -16,11 +16,11 @@
       <line style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x1="339.976" y1="141.5" x2="219.536" y2="141.5"/>
       <polygon style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" points="212.036,141.5 222.036,136.5 219.536,141.5 222.036,146.5 "/>
     </g>
-    <line style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x1="511" y1="141.5" x2="379.976" y2="141.5"/>
+    <line style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x1="516.25" y1="141.5" x2="379.976" y2="141.5"/>
     <g>
-      <rect style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="511" y="123.5" width="81.9" height="36"/>
-      <rect style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="516" y="128.5" width="71.9" height="26"/>
-      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="551.95" y="145.5">Episode</text>
+      <rect style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="516.25" y="123.5" width="81.9" height="36"/>
+      <rect style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="521.25" y="128.5" width="71.9" height="26"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="557.2" y="145.5">Episode</text>
     </g>
     <g>
       <ellipse style="fill: #ffffff; fill-opacity: 1; stroke: none" cx="108.7" cy="80" rx="27.7" ry="18"/>
@@ -51,15 +51,39 @@
       <line style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke-dasharray: 6; stroke: #000000" x1="604.3" y1="85.5" x2="650.5" y2="85.5"/>
     </g>
     <g>
-      <ellipse style="fill: #ffffff; fill-opacity: 1; stroke: none" cx="668.25" cy="160" rx="39.25" ry="18"/>
-      <ellipse style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" cx="668.25" cy="160" rx="39.25" ry="18"/>
-      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="668.25" y="164">title</text>
+      <ellipse style="fill: #ffffff; fill-opacity: 1; stroke: none" cx="729.25" cy="113" rx="39.25" ry="18"/>
+      <ellipse style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" cx="729.25" cy="113" rx="39.25" ry="18"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="729.25" y="117">title</text>
     </g>
     <line style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x1="149.669" y1="122.506" x2="124.04" y2="95.9155"/>
     <line style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x1="183.577" y1="122.499" x2="209.131" y2="91.3776"/>
     <line style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x1="148.292" y1="160.232" x2="113.215" y2="193.617"/>
-    <line style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x1="534.701" y1="122.506" x2="512.06" y2="97.5746"/>
-    <line style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x1="574.358" y1="122.492" x2="607.607" y2="94.2891"/>
-    <line style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x1="593.887" y1="148.171" x2="630.188" y2="153.945"/>
+    <line style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x1="538.33" y1="122.506" x2="513.322" y2="97.3344"/>
+    <line style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x1="578.049" y1="122.492" x2="608.71" y2="94.5391"/>
+    <line style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x1="599.141" y1="134.552" x2="691.352" y2="119.278"/>
+    <g>
+      <ellipse style="fill: #ffffff; fill-opacity: 1; stroke: none" cx="455.4" cy="204" rx="35.4" ry="18"/>
+      <ellipse style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" cx="455.4" cy="204" rx="35.4" ry="18"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="455.4" y="208">link</text>
+    </g>
+    <g>
+      <ellipse style="fill: #ffffff; fill-opacity: 1; stroke: none" cx="696.3" cy="231" rx="89.3" ry="18"/>
+      <ellipse style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" cx="696.3" cy="231" rx="89.3" ry="18"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="696.3" y="235">download_timestamp</text>
+    </g>
+    <g>
+      <ellipse style="fill: #ffffff; fill-opacity: 1; stroke: none" cx="532.95" cy="256" rx="46.95" ry="18"/>
+      <ellipse style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" cx="532.95" cy="256" rx="46.95" ry="18"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="532.95" y="260">quality</text>
+    </g>
+    <line style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x1="526.257" y1="160.497" x2="478.824" y2="189.619"/>
+    <line style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x1="553.198" y1="160.397" x2="536.955" y2="237.089"/>
+    <line style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x1="586.711" y1="160.488" x2="668.775" y2="213.29"/>
+    <g>
+      <ellipse style="fill: #ffffff; fill-opacity: 1; stroke: none" cx="745.25" cy="172" rx="39.25" ry="18"/>
+      <ellipse style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" cx="745.25" cy="172" rx="39.25" ry="18"/>
+      <text font-size="12.7998" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="745.25" y="176">state</text>
+    </g>
+    <line style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x1="707.27" y1="165.84" x2="599.116" y2="148.298"/>
   </g>
 </svg>

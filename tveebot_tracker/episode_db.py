@@ -1,6 +1,7 @@
 from contextlib import contextmanager
+from datetime import datetime
 
-from tveebot_tracker.episode import TVShow, Quality, Episode
+from tveebot_tracker.episode import TVShow, Quality, Episode, State
 
 
 class Connection:
@@ -42,6 +43,15 @@ class Connection:
         pass
 
     def episodes_from(self, tvshow: TVShow):
+        pass
+
+    def set_episode_state(self, episode: Episode, state: State):
+        pass
+
+    def set_episode_quality(self, episode: Episode, quality: Quality):
+        pass
+
+    def set_episode_download_timestamp(self, episode: Episode, download_timestamp: datetime):
         pass
 
 
