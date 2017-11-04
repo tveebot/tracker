@@ -67,6 +67,9 @@ class Connection:
                                        download_timestamp: datetime):
         pass
 
+    def episode_exists(self, episode: Episode):
+        pass
+
 
 def connect(db: EpisodeDB) -> Connection:
     """ Returns a connection to the DB """
