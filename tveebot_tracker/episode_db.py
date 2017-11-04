@@ -1,11 +1,23 @@
-from contextlib import contextmanager
 from datetime import datetime
 
 from tveebot_tracker.episode import TVShow, Quality, Episode, State
 
 
+class EpisodeDB:
+    """ Abstraction for the Episode DB """
+
+
 class Connection:
     """ Abstraction for a connection for the Episode DB """
+
+    def __init__(self, database: EpisodeDB):
+        self._db = database
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.close()
 
     def commit(self):
         pass
@@ -51,13 +63,11 @@ class Connection:
     def set_episode_quality(self, episode: Episode, quality: Quality):
         pass
 
-    def set_episode_download_timestamp(self, episode: Episode, download_timestamp: datetime):
+    def set_episode_download_timestamp(self, episode: Episode,
+                                       download_timestamp: datetime):
         pass
 
 
-class EpisodeDB:
-    """ Abstraction for the Episode DB """
-
-    @contextmanager
-    def connect(self):
-        pass
+def connect(db: EpisodeDB) -> Connection:
+    """ Returns a connection to the DB """
+    return Connection(db)
