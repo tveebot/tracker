@@ -4,6 +4,7 @@ from queue import Queue, Empty
 
 import libtorrent as lt
 
+from tveebot_tracker.config import Config
 from tveebot_tracker.episode import Episode, EpisodeFile, State
 from tveebot_tracker.episode_db import EpisodeDB, connect
 from tveebot_tracker.stoppable_thread import StoppableThread
@@ -29,10 +30,11 @@ class Downloader(StoppableThread):
     state_str = ['queued', 'checking', 'downloading metadata',
                  'downloading', 'finished', 'seeding', 'allocating']
 
-    def __init__(self, database: EpisodeDB, config, queue: Queue = Queue()):
+    def __init__(self, database: EpisodeDB, config: Config,
+                 queue: Queue = Queue()):
         super().__init__()
         self._database = database
-        self.download_dir = config.download_dir
+        self._config = config
 
         # This queue is shared with the tracker. The tracker 'produces'
         # episodes to download. The Downloader consumes those episodes and
@@ -44,6 +46,11 @@ class Downloader(StoppableThread):
         self.session.listen_on(6881, 6891)
 
         self._handles = []  # holds episode, file, and handle
+
+    @property
+    def download_dir(self):
+        """ Download queue, including the episodes to be downloaded """
+        return self._config.download_dir
 
     @property
     def queue(self):
