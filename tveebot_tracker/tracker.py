@@ -2,6 +2,7 @@ import logging
 from queue import Queue
 
 from tveebot_tracker import episode as ep
+from tveebot_tracker.config import Config
 from tveebot_tracker.episode import TVShow, Quality, State
 from tveebot_tracker.episode_db import EpisodeDB, connect
 from tveebot_tracker.source import EpisodeSource
@@ -23,7 +24,7 @@ class Tracker(StoppableThread):
     """
 
     def __init__(self, source: EpisodeSource, episode_db: EpisodeDB,
-                 download_queue: Queue, check_period: float):
+                 download_queue: Queue, config: Config):
         """
         Initialize the tracker with the necessary components.
 
@@ -31,14 +32,17 @@ class Tracker(StoppableThread):
         :param episode_db:     DB used to track episodes
         :param download_queue: queue shared with downloader to place new
                                episodes to be downloaded
-        :param check_period:   period of time with which the tracker will
-                               check for new episodes
+        :param config:         configuration used for the whole application
         """
         super().__init__()
         self.source = source
         self.database = episode_db
         self._queue = download_queue
-        self.check_period = check_period
+        self._config = config
+
+    @property
+    def check_period(self):
+        return self._config.track_period
 
     def run(self):
         # TODO put all episodes in QUEUED state back in the download queue
