@@ -1,10 +1,18 @@
 from datetime import datetime
 
+from tveebot_tracker.config import Config
 from tveebot_tracker.episode import TVShow, Quality, Episode, State
 
 
 class EpisodeDB:
     """ Abstraction for the Episode DB """
+
+    def __init__(self, config: Config):
+        self._config = config
+
+    @property
+    def db_file(self):
+        return self._config.db_file
 
 
 class Connection:

@@ -45,6 +45,10 @@ class Config:
         return float(self._config['tracker']['TrackPeriod'])
 
     @property
+    def db_file(self):
+        return Path(self._config['tracker']['Database'])
+
+    @property
     def download_dir(self):
         return Path(self._config['downloader']['DownloadDirectory'])
 
