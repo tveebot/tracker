@@ -10,4 +10,8 @@ setup(
     author_email='fialho.david@protonmail.com',
 
     packages=find_packages(),
+
+    package_data={
+        'tveebot_tracker': ['config.ini'],
+    },
 )
