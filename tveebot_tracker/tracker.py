@@ -1,9 +1,8 @@
 import logging
 from queue import Queue
 
-from tveebot_tracker import episode as ep
 from tveebot_tracker.config import Config
-from tveebot_tracker.episode import TVShow, Quality, State
+from tveebot_tracker.episode import TVShow, Quality, State, Episode
 from tveebot_tracker.episode_db import EpisodeDB, connect
 from tveebot_tracker.source import EpisodeSource
 from tveebot_tracker.stoppable_thread import StoppableThread
@@ -71,7 +70,7 @@ class Tracker(StoppableThread):
                 #   - internet connection may be failing
 
                 for file in files:
-                    episode = ep.from_title(file.title, tvshow.id)
+                    episode = Episode.from_file(file)
                     if not connection.episode_exists(episode):
                         logger.info("found new episode %dx%02d" %
                                     (episode.season, episode.number))
