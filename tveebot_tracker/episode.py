@@ -5,7 +5,7 @@ from enum import Enum
 from tveebot_tracker.exceptions import ParseError
 
 TVShow = namedtuple("TVShow", "id name")
-EpisodeFile = namedtuple("EpisodeFile", "tvshow title link quality")
+EpisodeFile = namedtuple("EpisodeFile", "title link quality")
 
 # The statements below are perfectly correct, as described in
 # https://docs.python.org/3/library/enum.html#functional-api
@@ -42,21 +42,25 @@ class Episode:
     _tags = {'PROPER', 'REPACK', 'TBA'}
 
     @staticmethod
-    def from_file(file: EpisodeFile):
+    def from_title(title: str, tvshow_id: str):
         """
-        Obtains the episode corresponding to the specified file.
+        Parses the *title*, obtaining the episode's information. The only
+        information that is not available from the title is the TV show ID
+        that must be provided in a separate argument.
 
-        :param file: episode file to obtain corresponding episode from
+        :param title: full episode title to parse
+        :param tvshow_id: ID of the tv show the episode belongs to
         :return: episode parsed from the given title
         """
-        raw_title: str = file.title
-
-        words = raw_title.split(" ")
+        words = title.split(" ")
         for index, word in enumerate(words):
             match = Episode._episode_pattern.match(word)
             if match:
                 # Parse season and number from this word
                 season, number = map(int, match.group().split('x'))
+
+                # The previous words compose the TV Show name
+                tvshow_name = " ".join(words[:index])
 
                 # The remainder corresponds to the episode's title
                 # except some flags
@@ -67,8 +71,9 @@ class Episode:
                     remainder = remainder[:-1]
 
                 # join the remainder without the flags to complete the title
-                title = " ".join(remainder)
+                episode_title = " ".join(remainder)
 
-                return Episode(file.tvshow, title, season, number)
+                return Episode(TVShow(tvshow_id, tvshow_name),
+                               episode_title, season, number)
 
-        raise ParseError(f"The file '{file}' did not map to an episode")
+        raise ParseError(f"failed to parse title '{title}'")
