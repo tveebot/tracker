@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class TVShowNotFound(Exception):
+class TVShowNotFoundError(Exception):
     """ Raised when a reference does not match any TV Show available """
 
 
