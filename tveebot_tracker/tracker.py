@@ -81,7 +81,7 @@ class Tracker(StoppableThread):
                     continue
 
                 for file in files:
-                    episode = Episode.from_file(file)
+                    episode = Episode.from_title(file.title, tvshow.id)
                     if not connection.episode_exists(episode):
                         logger.info("found new episode %dx%02d" %
                                     (episode.season, episode.number))
