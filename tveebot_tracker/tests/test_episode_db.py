@@ -14,35 +14,31 @@ class TestEpisodeDB:
         # noinspection PyTypeChecker
         return EpisodeDB(config)
 
-    def test_AfterInsertingANewTVShowInDB_TheDBContainsThatTVShow(self, db):
+    @fixture
+    def conn(self, db):
         with connect(db) as conn:
-            conn.insert_tvshow(TVShow("#1", "My Show"), Quality.SD)
-            conn.commit()
+            yield conn
 
-        with connect(db) as conn:
-            assert (TVShow("#1", "My Show"), Quality.SD) in conn.tvshows()
+    def test_AfterInsertingANewTVShowInDB_TheDBContainsThatTVShow(self, conn):
+        conn.insert_tvshow(TVShow("#1", "My Show"), Quality.SD)
 
-    def test_AfterInsertingMultipleNewTVShows_TheDBContainsAllOfThem(self, db):
+        assert (TVShow("#1", "My Show"), Quality.SD) in conn.tvshows()
+
+    def test_AfterInsertingMultipleNewTVShows_TheDBContainsAllOfThem(self, conn):
         tvshows = [
             (TVShow("#1", "My Show 1"), Quality.SD),
             (TVShow("#2", "My Show 2"), Quality.HD),
             (TVShow("#3", "My Show 3"), Quality.FHD),
         ]
 
-        with connect(db) as conn:
-            for tvshow, quality in tvshows:
-                conn.insert_tvshow(tvshow, quality)
-            conn.commit()
+        for tvshow, quality in tvshows:
+            conn.insert_tvshow(tvshow, quality)
 
-        with connect(db) as conn:
-            for tvshow, quality in tvshows:
-                assert tvshow, quality in conn.tvshows()
+        for tvshow, quality in tvshows:
+            assert tvshow, quality in conn.tvshows()
 
-    def test_InsertingTVShowsWithSameIDs_RaisesEntryExistsError(self, db):
-        with connect(db) as conn:
-            conn.insert_tvshow(TVShow("#1", "My Show"), Quality.SD)
-            conn.commit()
+    def test_InsertingTVShowsWithSameIDs_RaisesEntryExistsError(self, conn):
+        conn.insert_tvshow(TVShow("#1", "My Show"), Quality.SD)
 
-        with connect(db) as conn:
-            with raises(EntryExistsError):
-                conn.insert_tvshow(TVShow("#1", "Other Show"), Quality.HD)
+        with raises(EntryExistsError):
+            conn.insert_tvshow(TVShow("#1", "Other Show"), Quality.HD)
