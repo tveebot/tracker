@@ -12,6 +12,6 @@ setup(
     packages=find_packages(),
 
     package_data={
-        'tveebot_tracker': ['config.ini'],
+        'tveebot_tracker': ['config.ini', 'tables.sql'],
     },
 )
