@@ -7,11 +7,33 @@ from tveebot_tracker.exceptions import ParseError
 TVShow = namedtuple("TVShow", "id name")
 EpisodeFile = namedtuple("EpisodeFile", "title link quality")
 
+
+class Quality(Enum):
+    SD, HD, FHD = range(3)
+
+    @property
+    def tag(self) -> str:
+        return _to_tag[self]
+
+    @staticmethod
+    def from_tag(tag: str):
+        return _from_tag[tag]
+
+
+_to_tag = {
+    Quality.SD: "480p",
+    Quality.HD: "720p",
+    Quality.FHD: "1080p",
+}
+
+_from_tag = {
+    "480p": Quality.SD,
+    "720p": Quality.HD,
+    "1080p": Quality.FHD,
+}
+
 # The statements below are perfectly correct, as described in
 # https://docs.python.org/3/library/enum.html#functional-api
-# noinspection PyArgumentList
-Quality = Enum('Quality', 'FHD HD SD')
-
 # noinspection PyArgumentList
 State = Enum('State', 'QUEUED DOWNLOADING DOWNLOADED')
 
