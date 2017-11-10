@@ -2,7 +2,7 @@ from unittest.mock import MagicMock
 
 from pytest import fixture, raises
 
-from tveebot_tracker.episode import TVShow, Quality
+from tveebot_tracker.episode import TVShow, Quality, Episode
 from tveebot_tracker.episode_db import connect, EpisodeDB, EntryExistsError, \
     EntryNotFoundError
 
@@ -94,3 +94,42 @@ class TestEpisodeDB:
 
         with raises(EntryNotFoundError):
             conn.set_tvshow_quality("#3", Quality.HD)
+
+    def test_AfterInsertingAnEpisode_TheDBContainsThatEpisode(self, conn):
+        conn.insert_tvshow(TVShow("#1", "My Show"), Quality.SD)
+        episode = Episode(
+            tvshow=TVShow('#1', 'My Show'),
+            title="My Title",
+            season=1,
+            number=2
+        )
+
+        conn.insert_episode(episode)
+
+        assert episode in conn.episodes()
+
+    def test_InsertingAnEpisodeAlreadyInTheDB_RaisesEntryExistsError(
+            self, conn):
+        conn.insert_tvshow(TVShow("#1", "My Show"), Quality.SD)
+        episode = Episode(
+            tvshow=TVShow('#1', 'My Show'),
+            title="My Title",
+            season=1,
+            number=2
+        )
+        conn.insert_episode(episode)
+
+        with raises(EntryExistsError):
+            conn.insert_episode(episode)
+
+    def test_InsertingAnEpisodeWithoutAMatchingTVShow_RaisesEntryExistsError(
+            self, conn):
+        episode = Episode(
+            tvshow=TVShow('#1', 'My Show'),
+            title="My Title",
+            season=1,
+            number=2
+        )
+
+        with raises(EntryNotFoundError):
+            conn.insert_episode(episode)

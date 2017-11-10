@@ -25,7 +25,7 @@ class EntryExistsError(Exception):
 # region Helper Decorators
 
 
-def EntryError(func):
+def EntryErrors(func):
     """
     Decorator for methods that should raise an Entry Error. It converts
     sqlite errors into entry errors and it ignores any other errors.
@@ -36,8 +36,11 @@ def EntryError(func):
         try:
             return func(*args, **kwargs)
         except sqlite3.IntegrityError as error:
-            if 'UNIQUE constraint failed' in str(error):
+            error_message = str(error)
+            if 'UNIQUE constraint failed' in error_message:
                 raise EntryExistsError(f"DB already contains that entry")
+            elif 'FOREIGN KEY constraint failed' in error_message:
+                raise EntryNotFoundError(f"DB does not contain that entry")
 
             # Re-raise any ot expected error
             raise
@@ -115,7 +118,7 @@ class Connection:
 
     # region TV Show Table Methods
 
-    @EntryError
+    @EntryErrors
     def insert_tvshow(self, tvshow: TVShow, quality: Quality):
         """
         Inserts a new TV Show in the DB. It associates the TV Show with a
@@ -169,11 +172,30 @@ class Connection:
 
     # region Episode Table Methods
 
+    @EntryErrors
     def insert_episode(self, episode: Episode):
-        pass
+        """
+        Inserts a new TV Show in the DB. It associates the TV Show with a
+        video quality.
+
+        :raise EntryExistsError: if DB already contains a TV show with the
+                                 same ID as *tvshow*
+        :raise EntryNotFoundError: if the DB does not contain a TV Show with
+                                   for this episode
+        """
+        self._conn.cursor().execute(
+            'INSERT INTO episode VALUES (?, ?, ?, ?)',
+            (episode.tvshow.id, episode.season, episode.number, episode.title))
 
     def episodes(self):
-        pass
+        """ Yields each Episode in the DB """
+        cursor = self._conn.cursor()
+        cursor.execute(
+            'SELECT id, name, season, number, title '
+            'FROM episode JOIN tvshow ON tvshow_id == tvshow.id')
+
+        for row in _iter_rows(cursor):
+            yield _episode_from_row(row)
 
     def episodes_from(self, tvshow: TVShow):
         pass
@@ -212,6 +234,15 @@ def _iter_rows(cursor):
 
 def _tvshow_from_row(row) -> (TVShow, Quality):
     return TVShow(row['id'], row['name']), Quality.from_tag(row['quality'])
+
+
+def _episode_from_row(row) -> Episode:
+    return Episode(
+        tvshow=TVShow(row['id'], row['name']),
+        title=row['title'],
+        season=row['season'],
+        number=row['number']
+    )
 
 
 # endregion
