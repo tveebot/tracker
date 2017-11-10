@@ -77,3 +77,20 @@ class TestEpisodeDB:
 
         with raises(EntryNotFoundError):
             conn.delete_tvshow(tvshow_id="#3")
+
+    def test_SettingTVShowQualityFromSDToHD_ThatTVShowsQualityIsHD(self, conn):
+        conn.insert_tvshow(TVShow("#1", "My Show 1"), Quality.SD)
+        conn.insert_tvshow(TVShow("#2", "My Show 2"), Quality.SD)
+
+        conn.set_tvshow_quality("#1", Quality.HD)
+
+        assert TVShow("#1", "My Show 1"), Quality.HD in conn.tvshows()
+        assert TVShow("#2", "My Show 2"), Quality.SD in conn.tvshows()
+
+    def test_SettingQualityForNonExistingTVShow_RaisesEntryNotFoundError(
+            self, conn):
+        conn.insert_tvshow(TVShow("#1", "My Show 1"), Quality.SD)
+        conn.insert_tvshow(TVShow("#2", "My Show 2"), Quality.SD)
+
+        with raises(EntryNotFoundError):
+            conn.set_tvshow_quality("#3", Quality.HD)

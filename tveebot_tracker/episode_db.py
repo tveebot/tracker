@@ -152,8 +152,19 @@ class Connection:
             yield _tvshow_from_row(row)
 
     def set_tvshow_quality(self, tvshow_id: str, quality: Quality):
-        pass
+        """
+        Sets the video quality for the specified TV Show.
 
+        :raise EntryNotFoundError: if the DB does not contain a TV Show with
+                                   the specified ID
+        """
+        cursor = self._conn.cursor()
+        cursor.execute('UPDATE tvshow SET quality = ? WHERE id = ?',
+                       (quality.tag, tvshow_id))
+
+        if cursor.rowcount == 0:
+            raise EntryNotFoundError(f"DB does not contain TV Show with the "
+                                     f"ID {tvshow_id}")
     # endregion
 
     # region Episode Table Methods
