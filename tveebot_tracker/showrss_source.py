@@ -4,10 +4,10 @@ from xml.etree import ElementTree
 
 from tveebot_tracker.episode import Quality, EpisodeFile
 from tveebot_tracker.exceptions import ParseError
-from tveebot_tracker.source import TVShowNotFoundError
+from tveebot_tracker.source import TVShowNotFoundError, EpisodeSource
 
 
-class ShowRSSSource:
+class ShowRSSSource(EpisodeSource):
     """ Source based on the ShowRSS website """
 
     SHOW_RSS_URL = "https://showrss.info/show"
