@@ -129,7 +129,19 @@ class Connection:
             (tvshow.id, tvshow.name, quality.tag))
 
     def delete_tvshow(self, tvshow_id: str):
-        pass
+        """
+        Deletes the TV show with the specified ID from the DB.
+
+        :param tvshow_id: the ID of the TV Show to delete
+        :raise EntryNotFoundError: if the DB does not contain a TV Show with
+                                   the specified ID
+        """
+        cursor = self._conn.cursor()
+        cursor.execute('DELETE FROM tvshow WHERE id = ?', (tvshow_id,))
+
+        if cursor.rowcount == 0:
+            raise EntryNotFoundError(f"DB does not contain TV Show with the "
+                                     f"ID {tvshow_id}")
 
     def tvshows(self):
         """ Yields each TV Show in the DB (including the video quality) """
