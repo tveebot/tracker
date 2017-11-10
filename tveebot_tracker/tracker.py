@@ -4,7 +4,7 @@ from queue import Queue
 from tveebot_tracker.config import Config
 from tveebot_tracker.episode import TVShow, Quality, State, Episode
 from tveebot_tracker.episode_db import EpisodeDB, connect
-from tveebot_tracker.source import EpisodeSource
+from tveebot_tracker.source import EpisodeSource, TVShowNotFoundError
 from tveebot_tracker.stoppable_thread import StoppableThread
 
 logger = logging.getLogger('tracker')
@@ -61,13 +61,24 @@ class Tracker(StoppableThread):
         """
         with connect(self.database) as connection:
             for tvshow in connection.tvshows():
-                logger.info(f"looking for episodes from ")
-                files = self.source.fetch(tvshow.id)
-                logger.debug(f"fetched {len(files)} episode files")
 
-                # TODO handle possible errors when fetching episodes
-                #   - tv show ID may be incorrect - TV Show is not found
-                #   - internet connection may be failing
+                try:
+                    logger.info(f"looking for episodes from ")
+                    files = self.source.fetch(tvshow.id)
+                    logger.debug(f"fetched {len(files)} episode files")
+
+                except ConnectionError as error:
+                    logger.warning(str(error))
+
+                    # A connection error indicates that there might be some
+                    # problems with network or the server may be down
+                    # The best course here is to stop the current track and
+                    # try again later
+                    return
+
+                except TVShowNotFoundError as error:
+                    logger.error(str(error))
+                    continue
 
                 for file in files:
                     episode = Episode.from_file(file)
