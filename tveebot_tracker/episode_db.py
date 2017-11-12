@@ -78,6 +78,9 @@ class EpisodeDB:
 class Connection:
     """ Abstraction for a connection for the Episode DB """
 
+    # Datetime format used to store timestamps
+    DATETIME_FORMAT = "%Y-%m-%d_%H:%M:%S"
+
     def __init__(self, database: EpisodeDB):
         """
         Initializes a new connection. This initializer should not be called
@@ -179,17 +182,16 @@ class Connection:
         Inserts a new TV Show in the DB. It associates the TV Show with a
         video quality.
 
-        :raise EntryExistsError: if DB already contains a TV show with the
-                                 same ID as *tvshow*
-        :raise EntryNotFoundError: if the DB does not contain a TV Show with
-                                   for this episode
+        :raise EntryExistsError: if DB already contains *episode*
+        :raise EntryNotFoundError: if the DB does not contain the TV Show
+                                   this episode belongs to
         """
         self._conn.cursor().execute(
             'INSERT INTO episode VALUES (?, ?, ?, ?, ?)',
             (episode.tvshow.id, episode.season, episode.number,
              episode.title, None))
 
-    def episodes(self, include_state: bool=False):
+    def episodes(self, include_state: bool = False):
         """
         Yields each Episode in the DB. If *include_state* is set to true, then
         it yields, for each episode, a tuple including the episode and the
@@ -257,12 +259,40 @@ class Connection:
 
     # region File Table Methods
 
+    @EntryErrors
     def insert_file(self, episode: Episode, file: EpisodeFile):
-        pass
+        """
+        Inserts a new TV Show in the DB. It associates the TV Show with a
+        video quality.
 
-    def set_file_download_timestamp(self, episode: Episode,
-                                    download_timestamp: datetime):
-        pass
+        :param episode: episode to which the *file* corresponds
+        :param file:    file to insert
+        :raise EntryExistsError: if *episode* is already associated with a file
+        :raise EntryNotFoundError: if the DB does not contain *episode*
+        """
+        self._conn.cursor().execute(
+            'INSERT INTO file VALUES (?, ?, ?, ?, ?, ?)',
+            (episode.tvshow.id, episode.season, episode.number,
+             file.link, file.quality.tag, None))
+
+    def set_download_timestamp(self, episode: Episode, timestamp: datetime):
+        """
+        Sets the 'download timestamp' for the file associated with *episodes*.
+
+        :param episode:   episode to set download timestamp for
+        :param timestamp: timestamp to set
+        :raise EntryNotFoundError: if the DB does not contain *episode* or if
+                                   no file is specified for it
+        """
+        cursor = self._conn.cursor()
+        cursor.execute(
+            'UPDATE file SET download_timestamp = ? '
+            'WHERE tvshow_id = ? AND season = ? AND number = ?',
+            (episode.tvshow.id, episode.season, episode.number,
+             timestamp.strftime(self.DATETIME_FORMAT)))
+
+        if cursor.rowcount == 0:
+            raise EntryNotFoundError(f"DB does not contain file for {episode}")
 
     # endregion
 

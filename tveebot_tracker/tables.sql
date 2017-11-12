@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS file (
   number             INTEGER NOT NULL,
   link               TEXT NOT NULL,
   quality            TEXT NOT NULL,
-  download_timestamp TEXT NOT NULL,
+  download_timestamp TEXT,
 
   FOREIGN KEY (tvshow_id, season, number) REFERENCES episode,
 
