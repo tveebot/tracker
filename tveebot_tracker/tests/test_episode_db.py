@@ -2,9 +2,15 @@ from unittest.mock import MagicMock
 
 from pytest import fixture, raises
 
-from tveebot_tracker.episode import TVShow, Quality, Episode
+from tveebot_tracker.episode import TVShow, Quality, Episode, State
 from tveebot_tracker.episode_db import connect, EpisodeDB, EntryExistsError, \
     EntryNotFoundError
+
+
+def assert_lists_equal(list1: list, list2: list):
+    assert len(list1) == len(list2)
+    for item in list1:
+        assert item in list2
 
 
 class TestEpisodeDB:
@@ -133,3 +139,71 @@ class TestEpisodeDB:
 
         with raises(EntryNotFoundError):
             conn.insert_episode(episode)
+
+    def test_InsertingMultipleEpisodesFromDifferentTVShows(self, conn):
+        tvshow1 = TVShow("#1", "My Show 1")
+        tvshow2 = TVShow("#2", "My Show 2")
+        conn.insert_tvshow(tvshow1, Quality.SD)
+        conn.insert_tvshow(tvshow2, Quality.SD)
+        conn.insert_episode(Episode(tvshow1, "Show1-1x1", 1, 1))
+        conn.insert_episode(Episode(tvshow1, "Show1-1x2", 1, 2))
+        conn.insert_episode(Episode(tvshow2, "Show2-1x1", 1, 1))
+        conn.insert_episode(Episode(tvshow2, "Show2-1x2", 1, 2))
+
+        expected_episodes = [
+            Episode(tvshow1, "Show1-1x1", 1, 1),
+            Episode(tvshow1, "Show1-1x2", 1, 2),
+            Episode(tvshow2, "Show2-1x1", 1, 1),
+            Episode(tvshow2, "Show2-1x2", 1, 2)
+        ]
+
+        assert_lists_equal(expected_episodes, list(conn.episodes()))
+
+    def test_AskingForEpisodesOfOneTVShow_RetrievesOnlyEpisodesFromThatTVShow(
+            self, conn):
+        tvshow1 = TVShow("#1", "My Show 1")
+        tvshow2 = TVShow("#2", "My Show 2")
+        conn.insert_tvshow(tvshow1, Quality.SD)
+        conn.insert_tvshow(tvshow2, Quality.SD)
+        conn.insert_episode(Episode(tvshow1, "Show1-1x1", 1, 1))
+        conn.insert_episode(Episode(tvshow1, "Show1-1x2", 1, 2))
+        conn.insert_episode(Episode(tvshow2, "Show2-1x1", 1, 1))
+        conn.insert_episode(Episode(tvshow2, "Show2-1x2", 1, 2))
+
+        expected_episodes = [
+            Episode(tvshow1, "Show1-1x1", 1, 1),
+            Episode(tvshow1, "Show1-1x2", 1, 2)
+        ]
+
+        assert_lists_equal(expected_episodes, conn.episodes_from('#1'))
+
+    def test_SettingStateFromNullToDownloading_EpisodeStateIsDownloading(
+            self, conn):
+        tvshow1 = TVShow("#1", "My Show 1")
+        conn.insert_tvshow(tvshow1, Quality.SD)
+        episode = Episode(tvshow1, "Show1-1x1", 1, 1)
+        conn.insert_episode(episode)
+
+        conn.set_episode_state(episode, State.DOWNLOADING)
+
+        db_episode = list(conn.episodes(include_state=True))[0]
+        assert episode, State.DOWNLOADING == db_episode
+
+    def test_EpisodeWasNeverInserted_ItDoesNotExist(
+            self, conn):
+        tvshow1 = TVShow("#1", "My Show 1")
+        conn.insert_tvshow(tvshow1, Quality.SD)
+        conn.insert_episode(Episode(tvshow1, "Show1-1x1", 1, 1))
+        conn.insert_episode(Episode(tvshow1, "Show1-1x2", 1, 2))
+
+        assert not conn.episode_exists(Episode(tvshow1, "Show1-1x1", 1, 3))
+
+    def test_AfterInsertingEpisode_EpisodeExistsInDB(
+            self, conn):
+        tvshow1 = TVShow("#1", "My Show 1")
+        conn.insert_tvshow(tvshow1, Quality.SD)
+        conn.insert_episode(Episode(tvshow1, "Show1-1x1", 1, 1))
+
+        conn.insert_episode(Episode(tvshow1, "Show1-1x2", 1, 2))
+
+        assert not conn.episode_exists(Episode(tvshow1, "Show1-1x1", 1, 2))

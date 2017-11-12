@@ -6,7 +6,7 @@ from pathlib import Path
 from pkg_resources import resource_filename
 
 from tveebot_tracker.config import Config
-from tveebot_tracker.episode import TVShow, Quality, Episode, State
+from tveebot_tracker.episode import TVShow, Quality, Episode, State, EpisodeFile
 
 
 # region Errors/Exceptions
@@ -168,6 +168,7 @@ class Connection:
         if cursor.rowcount == 0:
             raise EntryNotFoundError(f"DB does not contain TV Show with the "
                                      f"ID {tvshow_id}")
+
     # endregion
 
     # region Episode Table Methods
@@ -184,33 +185,83 @@ class Connection:
                                    for this episode
         """
         self._conn.cursor().execute(
-            'INSERT INTO episode VALUES (?, ?, ?, ?)',
-            (episode.tvshow.id, episode.season, episode.number, episode.title))
+            'INSERT INTO episode VALUES (?, ?, ?, ?, ?)',
+            (episode.tvshow.id, episode.season, episode.number,
+             episode.title, None))
 
-    def episodes(self):
-        """ Yields each Episode in the DB """
+    def episodes(self, include_state: bool=False):
+        """
+        Yields each Episode in the DB. If *include_state* is set to true, then
+        it yields, for each episode, a tuple including the episode and the
+        respective state.
+        """
         cursor = self._conn.cursor()
         cursor.execute(
-            'SELECT id, name, season, number, title '
+            'SELECT id, name, season, number, title, state '
             'FROM episode JOIN tvshow ON tvshow_id == tvshow.id')
 
         for row in _iter_rows(cursor):
-            yield _episode_from_row(row)
+            if include_state:
+                yield _episode_from_row(row), row['state']
+            else:
+                yield _episode_from_row(row)
 
-    def episodes_from(self, tvshow: TVShow):
-        pass
+    def episodes_from(self, tvshow_id: str):
+        """
+        Retrieves from the DB all episodes from TV show with ID matching
+        *tvshow_id*.
+
+        :param tvshow_id: ID of TV Show to get episodes from
+        :return: list containing all episodes
+        """
+        cursor = self._conn.cursor()
+        cursor.execute(
+            'SELECT id, name, season, number, title '
+            'FROM episode JOIN tvshow ON tvshow_id == tvshow.id '
+            'WHERE id = ?', (tvshow_id,))
+
+        return [_episode_from_row(row) for row in _iter_rows(cursor)]
 
     def set_episode_state(self, episode: Episode, state: State):
+        """
+        Sets the state of an episode.
+
+        :raise EntryNotFoundError: if the DB does not contain *episode*
+        """
+        cursor = self._conn.cursor()
+        cursor.execute(
+            'UPDATE episode SET state = ? '
+            'WHERE tvshow_id = ? AND season = ? AND number = ?',
+            (state.tag,
+             episode.tvshow.id, episode.season, episode.number))
+
+        if cursor.rowcount == 0:
+            raise EntryNotFoundError(f"DB does not contain {episode}")
+
+    def episode_exists(self, episode: Episode) -> bool:
+        """
+        Checks whether the DB contains *episode* or not.
+
+        :param episode: episode to check
+        :return: True if DB contains *episode* or False if otherwise
+        """
+        cursor = self._conn.cursor()
+        cursor.execute(
+            'SELECT * FROM episode '
+            'WHERE tvshow_id = ? AND season = ? AND number = ?',
+            (episode.tvshow.id, episode.season, episode.number))
+
+        return cursor.rowcount > 0
+
+    # endregion
+
+    # region File Table Methods
+
+    def insert_file(self, episode: Episode, file: EpisodeFile):
         pass
 
-    def set_episode_quality(self, episode: Episode, quality: Quality):
-        pass
-
-    def set_episode_download_timestamp(self, episode: Episode,
-                                       download_timestamp: datetime):
-        pass
-
-    def episode_exists(self, episode: Episode):
+    def set_file_download_timestamp(self, episode: Episode,
+                                    download_timestamp: datetime):
         pass
 
     # endregion

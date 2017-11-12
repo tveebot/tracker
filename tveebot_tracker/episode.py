@@ -13,29 +13,49 @@ class Quality(Enum):
 
     @property
     def tag(self) -> str:
-        return _to_tag[self]
+        return _quality_to_tag[self]
 
     @staticmethod
     def from_tag(tag: str):
-        return _from_tag[tag]
+        return _quality_from_tag[tag]
 
 
-_to_tag = {
+_quality_to_tag = {
     Quality.SD: "480p",
     Quality.HD: "720p",
     Quality.FHD: "1080p",
 }
 
-_from_tag = {
+_quality_from_tag = {
     "480p": Quality.SD,
     "720p": Quality.HD,
     "1080p": Quality.FHD,
 }
 
-# The statements below are perfectly correct, as described in
-# https://docs.python.org/3/library/enum.html#functional-api
-# noinspection PyArgumentList
-State = Enum('State', 'QUEUED DOWNLOADING DOWNLOADED')
+
+class State(Enum):
+    QUEUED, DOWNLOADING, DOWNLOADED = range(3)
+
+    @property
+    def tag(self) -> str:
+        return _state_to_tag[self]
+
+    @staticmethod
+    def from_tag(tag: str):
+        return _state_from_tag[tag]
+
+
+_state_to_tag = {
+    State.QUEUED: "queued",
+    State.DOWNLOADING: "downloading",
+    State.DOWNLOADED: "downloaded",
+}
+
+_state_from_tag = {
+    "queued": State.QUEUED,
+    "downloading": State.DOWNLOADING,
+    "downloaded": State.DOWNLOADED,
+}
 
 
 class Episode:

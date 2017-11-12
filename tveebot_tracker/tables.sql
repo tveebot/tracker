@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS episode (
   season             INTEGER,
   number             INTEGER,
   title              TEXT NOT NULL,
+  state              TEXT,
 
   FOREIGN KEY (tvshow_id) REFERENCES tvshow,
 
@@ -21,7 +22,6 @@ CREATE TABLE IF NOT EXISTS file (
   tvshow_id          TEXT NOT NULL,
   season             INTEGER NOT NULL,
   number             INTEGER NOT NULL,
-  state              TEXT NOT NULL,
   link               TEXT NOT NULL,
   quality            TEXT NOT NULL,
   download_timestamp TEXT NOT NULL,
